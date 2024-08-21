@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>RFC - Información Fiscal</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="onSubmit()">
+    <div *ngFor="let rfcInfo of rfcInformacion; let i = index">
+      <ion-item>
+        <ion-label position="stacked">RFC</ion-label>
+        <ion-input type="text" [(ngModel)]="rfcInfo.rfc" name="rfc{{i}}" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">CURP</ion-label>
+        <ion-input type="text" [(ngModel)]="rfcInfo.curp" name="curp{{i}}" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Domicilio Fiscal</ion-label>
+        <ion-input type="text" [(ngModel)]="rfcInfo.domicilioFiscal" name="domicilioFiscal{{i}}" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Tipo de Régimen</ion-label>
+        <ion-select [(ngModel)]="rfcInfo.tipoRegimen" name="tipoRegimen{{i}}" required>
+          <ion-select-option value="fisica">Física</ion-select-option>
+          <ion-select-option value="moral">Moral</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="rfcInfo.tipoRegimen === 'fisica'">
+        <ion-label position="stacked">Régimen</ion-label>
+        <ion-select [(ngModel)]="rfcInfo.regimen" name="regimen{{i}}" required>
+          <ion-select-option value="Régimen de Incorporación Fiscal">Régimen de Incorporación Fiscal</ion-select-option>
+          <ion-select-option value="Actividades empresariales">Actividades empresariales</ion-select-option>
+          <ion-select-option value="Arrendamiento de inmuebles">Arrendamiento de inmuebles</ion-select-option>
+          <ion-select-option value="Servicios profesionales">Servicios profesionales</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="rfcInfo.tipoRegimen === 'moral'">
+        <ion-label position="stacked">Régimen</ion-label>
+        <ion-select [(ngModel)]="rfcInfo.regimen" name="regimen{{i}}" required>
+          <ion-select-option value="Régimen General de Ley">Régimen General de Ley</ion-select-option>
+          <ion-select-option value="Régimen de Actividad Agrícola, Ganadera, Silvícola y Pesquera">Régimen de Actividad Agrícola, Ganadera, Silvícola y Pesquera</ion-select-option>
+          <ion-select-option value="Régimen de Incorporación Fiscal (RIF)">Régimen de Incorporación Fiscal (RIF)</ion-select-option>
+          <ion-select-option value="Régimen de Sociedades Cooperativas de Producción">Régimen de Sociedades Cooperativas de Producción</ion-select-option>
+          <ion-select-option value="Régimen de Entidades Controladoras">Régimen de Entidades Controladoras</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-button color="danger" expand="full" (click)="removeRfcInfo(i)" *ngIf="rfcInformacion.length > 1">Eliminar RFC</ion-button>
+    </div>
+    <ion-button color="primary" expand="full" (click)="addRfcInfo()">Agregar RFC</ion-button>
+    <ion-button type="submit" expand="block" [disabled]="isSubmitting">Enviar</ion-button>
+  </form>
+</ion-content>

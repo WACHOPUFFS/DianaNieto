@@ -1,0 +1,344 @@
+<ion-split-pane contentId="main-content">
+    <style>
+        /* Ocultar el ion-header por defecto */
+        .responsive-header {
+            display: none;
+        }
+
+        /* Mostrar el ion-header solo en pantallas pequeñas */
+        @media (max-width: 991px) {
+            .responsive-header {
+                display: block;
+            }
+        }
+
+        /* Otros estilos existentes */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .menu-content {
+            padding: 20px;
+        }
+
+        .ion-note {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .btn-container {
+            margin-top: 20px;
+        }
+
+        .btn-custom {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .icon-img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .sidebar {
+            width: 300px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #f8f9fa;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-info img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-bottom: 15px;
+        }
+
+        .sidebar .sections a {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .main-content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .app-grid a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            padding: 20px;
+            border-radius: 10px;
+            height: 150px;
+            transition: background-color 0.3s ease;
+        }
+
+        .app-grid a:hover {
+            background-color: #0056b3;
+        }
+
+        .company-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .company-list li {
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .ion-select-custom {
+            margin-top: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .hamburger-menu {
+                display: block;
+                cursor: pointer;
+                padding: 10px;
+                background-color: #007bff;
+                color: white;
+                text-align: center;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .hamburger-menu {
+                display: none;
+            }
+        }
+
+        .current-date-time {
+            margin: 0;
+            font-size: 0.9em;
+            color: gray;
+        }
+
+        /* Estilo para el botón de notificaciones */
+        .notification-button {
+            width: 40px;
+            height: 40px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: auto;
+            /* Para alinear a la derecha */
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+        }
+    </style>
+
+    <ion-menu contentId="main-content" type="overlay">
+        <ion-content class="menu-content">
+            <!-- Contenido del menú lateral -->
+            <ion-list id="inbox-list">
+                <div class="profile-info">
+                    <img [src]="currentAvatar" alt="Foto de Perfil">
+                    <div class="text-center">
+                        <h5><strong>Bienvenido(a), {{ username }}</strong></h5>
+                        <p>Empresa: <span id="companyName">{{ authService.selectedCompany }}</span></p>
+                        <p>RFC: <span id="companyRFC">{{authService.selectedRFC}}</span></p>
+                        <p>Nivel de Usuario: <span id="userLevel">
+                                <span *ngIf="authService.selectedLevelUser === 'adminS'">
+                                    {{ labelNivelUsuarioAdministradorGeneral }}
+                                </span>
+                                <span *ngIf="authService.selectedLevelUser === 'adminE'">
+                                    {{ labelNivelUsuarioAdministradorEmpresaGeneral }}
+                                </span>
+                                <span *ngIf="authService.selectedLevelUser === 'admin'">
+                                    {{ labelNivelUsuarioAdministradorEmpresa }}
+                                </span>
+                                <span *ngIf="authService.selectedLevelUser === 'adminU'">
+                                    {{ labelNivelUsuarioAdministrativoEmpresa }}
+                                </span>
+                                <span *ngIf="authService.selectedLevelUser === 'superV'">
+                                    {{ labelNivelUsuarioSupervisorEmpresa }}
+                                </span>
+                                <span *ngIf="authService.selectedLevelUser === 'adminEE'">
+                                    Administrador único de la Empresa (Socio Comercial)
+                                </span>
+                                <span *ngIf="authService.selectedLevelUser === 'adminPE'">
+                                    Administrador único de la Empresa (Socio Comercial - Premium)
+                                </span>
+                            </span></p>
+                    </div>
+                </div>
+                <div *ngIf="currentLogo" class="text-center">
+                    <img [src]="currentLogo" alt="Logo de la Empresa" width="100">
+                </div>
+                <div class="text-center pt-4">
+                    <label for="company-select">Cambiar de empresa</label>
+                    <ion-select [(ngModel)]="selectedCompany" (ionChange)="selectCompany()" id="company-select"
+                        class="form-control">
+                        <ion-select-option *ngFor="let company of principalCompanies" [value]="company.name">
+                            {{ company.name }}
+                        </ion-select-option>
+                    </ion-select>
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title">Mis socios</h5>
+                    <h6 class="section-title">Aceptadas:</h6>
+                    <ul class="company-list" *ngIf="authService.nonPrincipalCompanies.length > 0">
+                        <ng-container *ngFor="let company of authService.nonPrincipalCompanies">
+                            <ng-container *ngIf="company.status === '1'">
+                                <li>
+                                    Empresa: {{ company.name }},
+                                    Rol:
+                                    <ng-container *ngIf="company.role === 'proveedor'">Proveedor</ng-container>
+                                    <ng-container *ngIf="company.role === 'cliente'">Cliente</ng-container>
+                                    <ng-container *ngIf="company.role === 'clienteProveedor'">Cliente -
+                                        Proveedor</ng-container>,
+                                    RFC: {{ company.rfc }},
+                                    Aceptada
+                                </li>
+                            </ng-container>
+                        </ng-container>
+                    </ul>
+                    <ng-template *ngIf="noEmpresasAceptadas()">
+                        <li>No hay empresas aceptadas</li>
+                    </ng-template>
+
+                    <h6 class="section-title mt-3">Pendientes:</h6>
+                    <ul class="company-list" *ngIf="authService.nonPrincipalCompanies.length > 0">
+                        <ng-container *ngFor="let company of authService.nonPrincipalCompanies">
+                            <ng-container *ngIf="company.status === '0'">
+                                <li>
+                                    Empresa: {{ company.name }},
+                                    Rol:
+                                    <ng-container *ngIf="company.role === 'proveedor'">Proveedor</ng-container>
+                                    <ng-container *ngIf="company.role === 'cliente'">Cliente</ng-container>
+                                    <ng-container *ngIf="company.role === 'clienteProveedor'">Cliente -
+                                        Proveedor</ng-container>,
+                                    RFC: {{ company.rfc }},
+                                    Pendiente
+                                </li>
+                            </ng-container>
+                        </ng-container>
+                    </ul>
+                    <ng-template *ngIf="noEmpresasPendientes()">
+                        <li>No hay empresas pendientes</li>
+                    </ng-template>
+                </div>
+                <button class="btn btn-danger mt-3 w-100" (click)="logout()">Cerrar Sesión</button>
+                <button class="btn  mt-3 w-100" (click)="abrirModal()"
+                    *ngIf="authService.selectedLevelUser === 'adminEE'">Ser parte del sistema REPSE</button>
+
+            </ion-list>
+        </ion-content>
+    </ion-menu>
+
+    <!-- Contenido principal -->
+    <ion-content id="main-content" [fullscreen]="true" class="ion-padding">
+        <div class="header-container">
+            <ion-buttons slot="start">
+                <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <div class="notification-button">
+                <ion-icon name="notifications"></ion-icon>
+            </div>
+        </div>
+
+        <!-- Contenido principal de la página -->
+        <div class="main-content">
+            <h5><strong>Inicio - Regularización Vehicular</strong></h5>
+            <p class="current-date-time">{{ currentDateTime }}</p>
+            <div class="app-grid mt-4">
+                <a routerLink="/repse" *ngIf="hasPermission('repse')">
+                    <img src="/assets/image/hoja-de-calculo.png" alt="Sistema REPSE" style="height: 60px;">
+                    <span>Sistema REPSE</span>
+                </a>
+                <a href="/works-control" *ngIf="hasPermission('obras')">
+                    <img src="/assets//image/bosquejo.png" alt="Control de Obras" style="height: 60px;">
+                    <span>Control de Vehículos</span>
+                </a>
+                <a href="#" *ngIf="hasPermission('asistencias')">
+                    <img src="/assets/image/pautas.png" alt="Sistema de Asistencias" style="height: 60px;">
+                    <span>Asistencias Vehiculares</span>
+                </a>
+                <a href="#" *ngIf="hasPermission('costos')">
+                    <img src="/assets/image/presupuesto.png " alt="Costos" style="height: 60px;">
+                    <span>Costos de Regularización</span>
+                </a>
+                <a href="#" *ngIf="hasPermission('ventas')">
+                    <img src="/assets/image/bolsa-de-valores.png" alt="Ventas" style="height: 60px;">
+                    <span>Registro de Ventas</span>
+                </a>
+                <a routerLink="/company-settings">
+                    <img src="/assets/image/actualizacion-del-sistema.png" alt="Configuración de la Empresa"
+                        style="height: 60px;">
+                    <span>Configuración del Servicio</span>
+                </a>
+                <a routerLink="/user-settings">
+                    <img src="/assets/image/ajustes-de-perfil.png" alt="Configuración del Empleado"
+                        style="height: 60px;">
+                    <span>Mi Perfil</span>
+                </a>
+                <a href="/page-settings">
+                    <img src="/assets/image/config.png" alt="Configuración de la Página" style="height: 60px;">
+                    <span>Configuración de la Página</span>
+                </a>
+            </div>
+        </div>
+        
+    </ion-content>
+</ion-split-pane>

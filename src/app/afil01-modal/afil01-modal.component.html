@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>AFIL01 - Seguro Social</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="onSubmit()">
+    <div *ngFor="let noPatronal of noPatronales; let i = index">
+      <ion-item>
+        <ion-label position="stacked">No. Patronal</ion-label>
+        <ion-input type="text" [(ngModel)]="noPatronal.noPatronal" name="noPatronal{{i}}" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">No. Reg. Patronal</ion-label>
+        <ion-input type="text" [(ngModel)]="noPatronal.noRegPatronal" name="noRegPatronal{{i}}" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">División</ion-label>
+        <ion-input type="text" [(ngModel)]="noPatronal.division" name="division{{i}}" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Grupo</ion-label>
+        <ion-input type="text" [(ngModel)]="noPatronal.grupo" name="grupo{{i}}" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Fracción</ion-label>
+        <ion-input type="text" [(ngModel)]="noPatronal.fraccion" name="fraccion{{i}}" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Clase</ion-label>
+        <ion-input type="text" [(ngModel)]="noPatronal.clase" name="clase{{i}}" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Actividad</ion-label>
+        <ion-input type="text" [(ngModel)]="noPatronal.actividad" name="actividad{{i}}" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Descripción</ion-label>
+        <ion-input type="text" [(ngModel)]="noPatronal.descripcion" name="descripcion{{i}}" required></ion-input>
+      </ion-item>
+      <ion-button color="danger" expand="full" (click)="removeNoPatronal(i)" *ngIf="noPatronales.length > 1">Eliminar No. Patronal</ion-button>
+    </div>
+    <ion-button color="primary" expand="full" (click)="addNoPatronal()">Agregar No. Patronal</ion-button>
+    <!-- Botón de enviar deshabilitado mientras se está enviando -->
+    <ion-button type="submit" expand="block" [disabled]="isSubmitting">Enviar</ion-button>
+  </form>
+</ion-content>

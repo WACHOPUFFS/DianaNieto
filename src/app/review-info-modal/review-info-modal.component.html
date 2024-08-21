@@ -1,0 +1,164 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Información Adicional: {{ tareaNombre }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="onSubmit()">
+    <div *ngIf="error">{{ error }}</div>
+    
+    <div *ngIf="actasConstitutivas.length > 0">
+      <h3>Actas Constitutivas</h3>
+      <div *ngFor="let acta of actasConstitutivas">
+        <ion-item>
+          <ion-label position="stacked">Domicilio Social</ion-label>
+          <ion-input type="text" [(ngModel)]="acta.domicilioSocial" name="domicilioSocial{{acta.id}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Nombre Representante</ion-label>
+          <ion-input type="text" [(ngModel)]="acta.nombreRepresentante" name="nombreRepresentante{{acta.id}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Número de Escritura</ion-label>
+          <ion-input type="text" [(ngModel)]="acta.numeroEscritura" name="numeroEscritura{{acta.id}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Folio Mercantil</ion-label>
+          <ion-input type="text" [(ngModel)]="acta.folioMercantil" name="folioMercantil{{acta.id}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Fecha de Constitución</ion-label>
+          <ion-datetime display-format="YYYY-MM-DD" [(ngModel)]="acta.fechaConstitucion" name="fechaConstitucion{{acta.id}}"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Nombre del Notario</ion-label>
+          <ion-input type="text" [(ngModel)]="acta.nombreNotario" name="nombreNotario{{acta.id}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Nombre de la Notaría</ion-label>
+          <ion-input type="text" [(ngModel)]="acta.nombreNotaria" name="nombreNotaria{{acta.id}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Lugar de Facultad</ion-label>
+          <ion-input type="text" [(ngModel)]="acta.lugarFacultad" name="lugarFacultad{{acta.id}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Seguro Social</ion-label>
+          <ion-input type="text" [(ngModel)]="acta.seguroSocial" name="seguroSocial{{acta.id}}"></ion-input>
+        </ion-item>
+      </div>
+    </div>
+
+    <div *ngIf="afil01.length > 0">
+      <h3>AFIL01</h3>
+      <div *ngFor="let afil of afil01">
+        <ion-item>
+          <ion-label position="stacked">No. Patronal</ion-label>
+          <ion-input type="text" [(ngModel)]="afil.noPatronal" name="noPatronal{{afil.id}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">No. Reg. Patronal</ion-label>
+          <ion-input type="text" [(ngModel)]="afil.noRegPatronal" name="noRegPatronal{{afil.id}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">División</ion-label>
+          <ion-input type="text" [(ngModel)]="afil.division" name="division{{afil.id}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Grupo</ion-label>
+          <ion-input type="text" [(ngModel)]="afil.grupo" name="grupo{{afil.id}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Fracción</ion-label>
+          <ion-input type="text" [(ngModel)]="afil.fraccion" name="fraccion{{afil.id}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Clase</ion-label>
+          <ion-input type="text" [(ngModel)]="afil.clase" name="clase{{afil.id}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Actividad</ion-label>
+          <ion-input type="text" [(ngModel)]="afil.actividad" name="actividad{{afil.id}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Descripción</ion-label>
+          <ion-input type="text" [(ngModel)]="afil.descripcion" name="descripcion{{afil.id}}"></ion-input>
+        </ion-item>
+      </div>
+    </div>
+
+    <div *ngIf="rfc.length > 0">
+      <h3>RFC</h3>
+      <div *ngFor="let r of rfc">
+        <ion-item>
+          <ion-label position="stacked">RFC</ion-label>
+          <ion-input type="text" [(ngModel)]="r.rfc" name="rfc{{r.id}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">CURP</ion-label>
+          <ion-input type="text" [(ngModel)]="r.curp" name="curp{{r.id}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Domicilio Fiscal</ion-label>
+          <ion-input type="text" [(ngModel)]="r.domicilioFiscal" name="domicilioFiscal{{r.id}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Tipo de Régimen</ion-label>
+          <ion-select [(ngModel)]="r.tipoRegimen" name="tipoRegimen{{r.id}}">
+            <ion-select-option value="fisica">Física</ion-select-option>
+            <ion-select-option value="moral">Moral</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngIf="r.tipoRegimen === 'fisica'">
+          <ion-label position="stacked">Régimen</ion-label>
+          <ion-select [(ngModel)]="r.regimen" name="regimen{{r.id}}">
+            <ion-select-option value="Régimen de Incorporación Fiscal">Régimen de Incorporación Fiscal</ion-select-option>
+            <ion-select-option value="Actividades empresariales">Actividades empresariales</ion-select-option>
+            <ion-select-option value="Arrendamiento de inmuebles">Arrendamiento de inmuebles</ion-select-option>
+            <ion-select-option value="Servicios profesionales">Servicios profesionales</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngIf="r.tipoRegimen === 'moral'">
+          <ion-label position="stacked">Régimen</ion-label>
+          <ion-select [(ngModel)]="r.regimen" name="regimen{{r.id}}">
+            <ion-select-option value="Régimen General de Ley">Régimen General de Ley</ion-select-option>
+            <ion-select-option value="Régimen de Actividad Agrícola, Ganadera, Silvícola y Pesquera">Régimen de Actividad Agrícola, Ganadera, Silvícola y Pesquera</ion-select-option>
+            <ion-select-option value="Régimen de Incorporación Fiscal (RIF)">Régimen de Incorporación Fiscal (RIF)</ion-select-option>
+            <ion-select-option value="Régimen de Sociedades Cooperativas de Producción">Régimen de Sociedades Cooperativas de Producción</ion-select-option>
+            <ion-select-option value="Régimen de Entidades Controladoras">Régimen de Entidades Controladoras</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+    </div>
+
+    <div *ngIf="autorizacion.length > 0">
+      <h3>Autorización STPS</h3>
+      <div *ngFor="let auto of autorizacion">
+        <ion-item>
+          <ion-label position="stacked">Fecha de Autorización</ion-label>
+          <ion-datetime display-format="YYYY-MM-DD" [(ngModel)]="auto.fechaAutorizacion" name="fechaAutorizacion{{auto.id}}"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Registro de Autorización</ion-label>
+          <ion-input type="text" [(ngModel)]="auto.registroAutorizacion" name="registroAutorizacion{{auto.id}}"></ion-input>
+        </ion-item>
+        <div *ngFor="let actividad of auto.actividades; let i = index">
+          <ion-item>
+            <ion-label position="stacked">Actividad</ion-label>
+            <ion-input type="text" [(ngModel)]="actividad.actividad" name="actividad{{auto.id}}{{i}}"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Folio</ion-label>
+            <ion-input type="text" [(ngModel)]="actividad.folio" name="folio{{auto.id}}{{i}}"></ion-input>
+          </ion-item>
+        </div>
+      </div>
+    </div>
+
+    <ion-button type="submit" expand="block" [disabled]="isSubmitting">Guardar Cambios</ion-button>
+  </form>
+</ion-content>

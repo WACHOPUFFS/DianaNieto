@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Autorización STPS</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="isSubmitting" (click)="dismiss()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="stacked">Fecha Autorización</ion-label>
+      <ion-datetime display-format="YYYY-MM-DD" [(ngModel)]="fechaAutorizacion" name="fechaAutorizacion" required></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Registro Autorización</ion-label>
+      <ion-input type="text" [(ngModel)]="registroAutorizacion" name="registroAutorizacion" required></ion-input>
+    </ion-item>
+
+    <ion-list>
+      <ion-item-divider>
+        <ion-label>Actividades</ion-label>
+      </ion-item-divider>
+      <div *ngFor="let actividad of actividades; let i = index">
+        <ion-item>
+          <ion-label position="stacked">Actividad</ion-label>
+          <ion-input type="text" [(ngModel)]="actividad.actividad" name="actividad{{i}}" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Folio</ion-label>
+          <ion-input type="text" [(ngModel)]="actividad.folio" name="folio{{i}}" required></ion-input>
+        </ion-item>
+        <ion-button color="danger" expand="full" (click)="removeActividad(i)" *ngIf="actividades.length > 1">Eliminar Actividad</ion-button>
+      </div>
+    </ion-list>
+
+    <ion-button color="primary" expand="full" (click)="addActividad()">Agregar Actividad</ion-button>
+    <ion-button type="submit" expand="block" [disabled]="isSubmitting">Enviar</ion-button>
+  </form>
+</ion-content>

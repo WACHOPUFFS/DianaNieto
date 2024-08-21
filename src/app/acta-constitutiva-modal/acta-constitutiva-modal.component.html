@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Acta Constitutiva</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+    <ion-item>
+      <ion-label position="stacked">Domicilio Social</ion-label>
+      <ion-input type="text" name="domicilioSocial" ngModel required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Nombre del Representante</ion-label>
+      <ion-input type="text" name="nombreRepresentante" ngModel required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Número de Escritura</ion-label>
+      <ion-input type="text" name="numeroEscritura" ngModel required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Folio Mercantil</ion-label>
+      <ion-input type="text" name="folioMercantil" ngModel required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Fecha de Constitución</ion-label>
+      <ion-datetime display-format="MM/DD/YYYY" name="fechaConstitucion" ngModel required></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Nombre del Notario</ion-label>
+      <ion-input type="text" name="nombreNotario" ngModel required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Nombre de la Notaría</ion-label>
+      <ion-input type="text" name="nombreNotaria" ngModel required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Lugar de Facultad</ion-label>
+      <ion-input type="text" name="lugarFacultad" ngModel required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Seguro Social</ion-label>
+      <ion-input type="text" name="seguroSocial" ngModel required></ion-input>
+    </ion-item>
+    <ion-button expand="block" type="submit">Enviar</ion-button>
+  </form>
+</ion-content>
